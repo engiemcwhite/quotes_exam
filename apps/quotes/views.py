@@ -9,6 +9,9 @@ import bcrypt
 #"date": strftime("%b %d, %Y", gmtime()),
   # the index function is called when root is visited
 def index(request):
+    if 'user_id' not in request.session:
+        return redirect('/main')
+
     id = request.session['user_id']
     context = {
         'quotables' : Quote.objects.exclude(favoritedby = id),
