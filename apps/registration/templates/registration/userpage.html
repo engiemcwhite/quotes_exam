@@ -1,0 +1,18 @@
+<html>
+    <head>
+        {% load static %}
+        <!-- The line above tells Django to be ready to listen for static files -->
+        <link rel="stylesheet" href="{% static 'ourApp/css/main.css' %}" media="screen" title="no title"  charset="utf-8">
+        <!-- Put the static files in the static folder inside your app.  Django collects files within all static folders and puts them within a single folder -->  
+    </head>
+    <body>
+        <a href="/quotes">Dashboard</a> |  <a href="/logout">Logout</a>
+        <h3>Posts by {{user.first_name}}</h3>
+        <h4>Count: {{numquotes}}</h4>
+        {% for myquote in uploadedquotes %}
+            <p><b>{{myquote.author}}:</b> {{myquote.text}}</p>
+        {% endfor %}
+        <br>
+        
+    </body>
+</html>

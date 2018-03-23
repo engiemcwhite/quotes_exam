@@ -1,0 +1,51 @@
+<html>
+    <head>
+        {% load static %}
+        <!-- The line above tells Django to be ready to listen for static files -->
+        <link rel="stylesheet" href="{% static 'ourApp/css/main.css' %}" media="screen" title="no title"  charset="utf-8">
+        <!-- Put the static files in the static folder inside your app.  Django collects files within all static folders and puts them within a single folder -->  
+    </head>
+    <body>
+        <a href="/logout">Logout</a>
+        <h2>Welcome, {{request.session.name}}! </h2>
+        <h4>Quotable Quotes:</h4>
+        {% for myquote in quotables %}
+        <b>{{myquote.author}}:</b> {{myquote.text}}
+        <br>
+        <i>Posted by <a href='/users/{{myquote.postedby.id}}'>{{myquote.postedby.first_name}}</a></i>
+        <form action='/quotes/add' method = 'post'>
+            {% csrf_token %}
+            <input type="hidden" name="quoteid" value="{{myquote.id}}">
+            <input type='submit' value='Add to My List'>
+        </form>
+        <br>
+        {% endfor %}
+        <br>
+        <h4>Your Favorites:</h4>
+        {% for favquote in favorites %}
+            <b>{{favquote.author}}:</b> {{favquote.text}}
+            <br>
+            <i>Posted by <a href='/users/{{favquote.postedby.id}}'>{{favquote.postedby.first_name}}</a></i>
+            <form action='/quotes/remove' method = 'post'>
+                {% csrf_token %}
+                <input type="hidden" name="quoteid" value="{{favquote.id}}">
+                <input type="submit" value='Remove From My List'>
+            </form>
+            <br>
+        {% endfor %}
+        <h3>Contribute a Quote:</h3>
+        <form action='/quotes/postquote' method='post'>
+            {% csrf_token %}
+            Quoted By: <input type=text name="author"><br>
+            Message: <br> <textarea name="quote" rows="5" cols="30"></textarea><br>
+            <input type="submit" value='Submit'>
+        </form>
+        {% if messages %}
+            <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    </body>
+</html>
