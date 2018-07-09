@@ -1,0 +1,23 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+.wrapper{
+    width: 970px;
+    vertical-align: top;
+    text-align: center;
+}
+
+.side{
+    width: 400px;
+    display: inline-block;
+    vertical-align: top;
+    border: 2px solid black;
+    margin-top: 20px;
+}
+
+.errors{
+    text-align: center;
+    color: red;
+}
